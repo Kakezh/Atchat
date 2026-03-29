@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atchat – @ Snippets</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <img src="icons/icon48.png" alt="Atchat" class="logo" />
+        <div>
+          <h1 class="title">Atchat</h1>
+          <p class="subtitle">@ Snippet Manager</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <input
+        id="search"
+        type="search"
+        class="search-input"
+        placeholder="Search snippets…"
+        aria-label="Search snippets"
+        autocomplete="off"
+      />
+    </div>
+
+    <!-- Snippet list -->
+    <main id="list" class="list" role="list" aria-label="Saved snippets"></main>
+
+    <!-- Empty state -->
+    <div id="empty" class="empty" hidden>
+      <div class="empty-icon">📌</div>
+      <p class="empty-title">No snippets saved yet</p>
+      <p class="empty-hint">
+        Select text on a ChatGPT, Gemini, or Claude page and click
+        <strong>"📌 Save to @"</strong>.
+        Then type <strong>@</strong> in the chat input to use it.
+      </p>
+    </div>
+
+    <!-- Count -->
+    <footer class="footer">
+      <span id="count" class="count"></span>
+      <button id="clear-all" class="btn-danger" title="Delete all snippets" hidden>
+        Clear all
+      </button>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
