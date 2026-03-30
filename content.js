@@ -263,7 +263,19 @@
   // Insert a snippet into the chat input
   // ─────────────────────────────────────────────
 
+  function formatSnippetMentionText(snippetText) {
+    const PREVIEW_CHARS = 12;
+    const text = (snippetText || '').trim();
+    const totalChars = text.length;
+    if (!totalChars) return '';
+    if (totalChars <= PREVIEW_CHARS) return `${text}(共${totalChars}字符)`;
+    return `${text.slice(0, PREVIEW_CHARS)}…(共${totalChars}字符)`;
+  }
+
   function commitSnippet(inputEl, snippetText) {
+    const mentionText = formatSnippetMentionText(snippetText);
+    if (!mentionText) return;
+
     if (inputEl.isContentEditable) {
       const sel = window.getSelection();
       if (!sel || !sel.rangeCount) return;
@@ -289,14 +301,14 @@
       }
 
       // Replace with snippet (execCommand keeps React's synthetic events happy)
-      document.execCommand('insertText', false, snippetText + ' ');
+      document.execCommand('insertText', false, mentionText + ' ');
     } else {
       const pos = inputEl.selectionStart ?? inputEl.value.length;
       const value = inputEl.value;
       const atIdx = value.slice(0, pos).lastIndexOf('@');
       if (atIdx === -1) return;
 
-      const newValue = value.slice(0, atIdx) + snippetText + ' ' + value.slice(pos);
+      const newValue = value.slice(0, atIdx) + mentionText + ' ' + value.slice(pos);
 
       // Use the native property setter so React / Vue notice the change
       const proto = Object.getPrototypeOf(inputEl);
@@ -307,7 +319,7 @@
         inputEl.value = newValue;
       }
 
-      const newCursor = atIdx + snippetText.length + 1;
+      const newCursor = atIdx + mentionText.length + 1;
       inputEl.selectionStart = inputEl.selectionEnd = newCursor;
       inputEl.dispatchEvent(new InputEvent('input', { bubbles: true }));
     }
