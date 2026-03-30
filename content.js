@@ -263,17 +263,8 @@
   // Insert a snippet into the chat input
   // ─────────────────────────────────────────────
 
-  function formatSnippetMentionText(snippetText) {
-    const PREVIEW_CHARS = 12;
-    const text = (snippetText || '').trim();
-    const totalChars = text.length;
-    if (!totalChars) return '';
-    if (totalChars <= PREVIEW_CHARS) return `${text}(共${totalChars}字符)`;
-    return `${text.slice(0, PREVIEW_CHARS)}…(共${totalChars}字符)`;
-  }
-
   function commitSnippet(inputEl, snippetText) {
-    const mentionText = formatSnippetMentionText(snippetText);
+    const mentionText = (snippetText || '').trim();
     if (!mentionText) return;
 
     if (inputEl.isContentEditable) {
